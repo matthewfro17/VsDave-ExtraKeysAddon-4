@@ -1,6 +1,5 @@
 package;
 
-import ChangeKeybinds.KeybindState;
 import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;
@@ -12,9 +11,8 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
-using StringTools;
-
-class Controls extends FlxActionSet
+#if (haxe >= "4.2.5")
+enum abstract Action(String) to String from String
 {
 	var UP = "up";
 	var LEFT = "left";
@@ -151,7 +149,224 @@ class Controls extends FlxActionSet
 	var T9_R = "t9-release";
 	var T10_R = "t10-release";
 	var T11_R = "t11-release";
+}
+#else
+@:enum
+abstract Action(String) to String from String
+{
+	var UP = "up";
+	var LEFT = "left";
+	var RIGHT = "right";
+	var DOWN = "down";
+	var UP_P = "up-press";
+	var LEFT_P = "left-press";
+	var RIGHT_P = "right-press";
+	var DOWN_P = "down-press";
+	var UP_R = "up-release";
+	var LEFT_R = "left-release";
+	var RIGHT_R = "right-release";
+	var DOWN_R = "down-release";
+	var ACCEPT = "accept";
+	var BACK = "back";
+	var PAUSE = "pause";
+	var RESET = "reset";
+	var CHEAT = "cheat";
+	var CENTER = "center";
+	var CENTER_P = "center-press";
+	var CENTER_R = "center-release";
+	
+	var L1 = "l1";
+	var U1 = "u";
+	var R1 = "r1";
+	var L2 = "l2";
+	var D1 = "d";
+	var R2 = "r2";
 
+	var L1_P = "l1-press";
+	var U1_P = "u-press";
+	var R1_P = "r1-press";
+	var L2_P = "l2-press";
+	var D1_P = "d-press";
+	var R2_P = "r2-press";
+
+	var L1_R = "l1-release";
+	var U1_R = "u-release";
+	var R1_R = "r1-release";
+	var L2_R = "l2-release";
+	var D1_R = "d-release";
+	var R2_R = "r2-release";
+
+	var A0 = "a0";
+	var A1 = "a1";
+	var A2 = "a2";
+	var A3 = "a3";
+	var A4 = "a4";
+	var A5 = "a5";
+	var A6 = "a6";
+
+	var A0_P = "a0-press";
+	var A1_P = "a1-press";
+	var A2_P = "a2-press";
+	var A3_P = "a3-press";
+	var A4_P = "a4-press";
+	var A5_P = "a5-press";
+	var A6_P = "a6-press";
+
+	var A0_R = "a0-release";
+	var A1_R = "a1-release";
+	var A2_R = "a2-release";
+	var A3_R = "a3-release";
+	var A4_R = "a4-release";
+	var A5_R = "a5-release";
+	var A6_R = "a6-release";
+
+	var N0 = "n0";
+	var N1 = "n1";
+	var N2 = "n2";
+	var N3 = "n3";
+	var N4 = "n4";
+	var N5 = "n5";
+	var N6 = "n6";
+	var N7 = "n7";
+	var N8 = "n8";
+
+	var N0_P = "n0-press";
+	var N1_P = "n1-press";
+	var N2_P = "n2-press";
+	var N3_P = "n3-press";
+	var N4_P = "n4-press";
+	var N5_P = "n5-press";
+	var N6_P = "n6-press";
+	var N7_P = "n7-press";
+	var N8_P = "n8-press";
+
+	var N0_R = "n0-release";
+	var N1_R = "n1-release";
+	var N2_R = "n2-release";
+	var N3_R = "n3-release";
+	var N4_R = "n4-release";
+	var N5_R = "n5-release";
+	var N6_R = "n6-release";
+	var N7_R = "n7-release";
+	var N8_R = "n8-release";
+
+	var T0 = "t0";
+	var T1 = "t1";
+	var T2 = "t2";
+	var T3 = "t3";
+	var T4 = "t4";
+	var T5 = "t5";
+	var T6 = "t6";
+	var T7 = "t7";
+	var T8 = "t8";
+	var T9 = "t9";
+	var T10 = "t10";
+	var T11 = "t11";
+
+	var T0_P = "t0-press";
+	var T1_P = "t1-press";
+	var T2_P = "t2-press";
+	var T3_P = "t3-press";
+	var T4_P = "t4-press";
+	var T5_P = "t5-press";
+	var T6_P = "t6-press";
+	var T7_P = "t7-press";
+	var T8_P = "t8-press";
+	var T9_P = "t9-press";
+	var T10_P = "t10-press";
+	var T11_P = "t11-press";
+
+	var T0_R = "t0-release";
+	var T1_R = "t1-release";
+	var T2_R = "t2-release";
+	var T3_R = "t3-release";
+	var T4_R = "t4-release";
+	var T5_R = "t5-release";
+	var T6_R = "t6-release";
+	var T7_R = "t7-release";
+	var T8_R = "t8-release";
+	var T9_R = "t9-release";
+	var T10_R = "t10-release";
+	var T11_R = "t11-release";
+}
+#end
+
+enum Device
+{
+	Keys;
+	Gamepad(id:Int);
+}
+
+/**
+ * Since, in many cases multiple actions should use similar keys, we don't want the
+ * rebinding UI to list every action. ActionBinders are what the user percieves as
+ * an input so, for instance, they can't set jump-press and jump-release to different keys.
+ */
+enum Control
+{
+	UP;
+	LEFT;
+	RIGHT;
+	DOWN;
+	RESET;
+	ACCEPT;
+	BACK;
+	PAUSE;
+	CHEAT;
+	KEY5;
+	CENTER;
+	L1;
+	U1;
+	R1;
+	L2;
+	D1;
+	R2;
+	A0;
+	A1;
+	A2;
+	A3;
+	A4;
+	A5;
+	A6;
+	N0;
+	N1;
+	N2;
+	N3;
+	N4;
+	N5;
+	N6;
+	N7;
+	N8;
+	T0;
+	T1;
+	T2;
+	T3;
+	T4;
+	T5;
+	T6;
+	T7;
+	T8;
+	T9;
+	T10;
+	T11;
+}
+
+enum KeyboardScheme
+{
+	Solo;
+	Duo(first:Bool);
+	None;
+	Custom;
+	Askl;
+	ZxCommaDot;
+}
+
+/**
+ * A list of actions that a player would invoke via some input device.
+ * Uses FlxActions to funnel various inputs to a single action.
+ */
+class Controls extends FlxActionSet
+{
 	var _up = new FlxActionDigital(Action.UP);
 	var _left = new FlxActionDigital(Action.LEFT);
 	var _right = new FlxActionDigital(Action.RIGHT);
@@ -292,7 +507,7 @@ class Controls extends FlxActionSet
 	var _t10R = new FlxActionDigital(Action.T10_R);
 	var _t11R = new FlxActionDigital(Action.T11_R);
 
-	#if (haxe >= "4.0.0")
+	#if (haxe >= "4.2.5")
 	var byName:Map<String, FlxActionDigital> = [];
 	#else
 	var byName:Map<String, FlxActionDigital> = new Map<String, FlxActionDigital>();
@@ -684,7 +899,7 @@ class Controls extends FlxActionSet
 	inline function get_T10_R() return _t10R.check();
 	inline function get_T11_R() return _t11R.check();
 
-	#if (haxe >= "4.0.0")
+	#if (haxe >= "4.2.5")
 	public function new(name, scheme = None)
 	{
 		super(name);
@@ -1279,7 +1494,7 @@ class Controls extends FlxActionSet
 
 	public function copyFrom(controls:Controls, ?device:Device)
 	{
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		for (name => action in controls.byName)
 		{
 			for (input in action.inputs)
@@ -1304,7 +1519,7 @@ class Controls extends FlxActionSet
 		{
 			case null:
 				// add all
-				#if (haxe >= "4.0.0")
+				#if (haxe >= "4.2.5")
 				for (gamepad in controls.gamepadsAdded)
 					if (!gamepadsAdded.contains(gamepad))
 						gamepadsAdded.push(gamepad);
@@ -1353,7 +1568,7 @@ class Controls extends FlxActionSet
 			if(i == NONE) copyKeys.remove(i);
 		}
 
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		inline forEachBound(control, (action, state) -> addKeys(action, keys, state));
 		#else
 		forEachBound(control, function(action, state) addKeys(action, keys, state));
@@ -1371,7 +1586,7 @@ class Controls extends FlxActionSet
 			if(i == NONE) copyKeys.remove(i);
 		}
 
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		inline forEachBound(control, (action, _) -> removeKeys(action, keys));
 		#else
 		forEachBound(control, function(action, _) removeKeys(action, keys));
@@ -1756,7 +1971,7 @@ class Controls extends FlxActionSet
 	{
 		gamepadsAdded.push(id);
 		
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		for (control => buttons in buttonMap)
 			inline bindButtons(control, id, buttons);
 		#else
@@ -1769,7 +1984,7 @@ class Controls extends FlxActionSet
 	{
 		gamepadsAdded.push(id);
 
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		for (control => buttons in buttonMap)
 			inline bindButtons(control, id, buttons);
 		#else
@@ -1832,7 +2047,7 @@ class Controls extends FlxActionSet
 	 */
 	public function bindButtons(control:Control, id, buttons)
 	{
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		inline forEachBound(control, (action, state) -> addButtons(action, buttons, state, id));
 		#else
 		forEachBound(control, function(action, state) addButtons(action, buttons, state, id));
@@ -1845,7 +2060,7 @@ class Controls extends FlxActionSet
 	 */
 	public function unbindButtons(control:Control, gamepadID:Int, buttons)
 	{
-		#if (haxe >= "4.0.0")
+		#if (haxe >= "4.2.5")
 		inline forEachBound(control, (action, _) -> removeButtons(action, gamepadID, buttons));
 		#else
 		forEachBound(control, function(action, _) removeButtons(action, gamepadID, buttons));
