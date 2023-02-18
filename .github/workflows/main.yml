@@ -30,7 +30,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install hxcpp 4,2,1
+          haxelib install hxcpp
           haxelib install actuate 1,9,0
           haxelib install box2d 1,2,3
           haxelib install lime 8.0.0
