@@ -34,8 +34,8 @@ jobs:
           haxelib install actuate 1,9,0
           haxelib install box2d 1,2,3
           haxelib install lime 8.0.0
-          haxelib install openfl 9,2,0
-          haxelib install openfl-samples 8,7,0
+          haxelib install openfl
+          haxelib install openfl-samples
           haxelib install flixel 5.0.0
           haxelib run lime setup flixel
           haxelib run lime setup
